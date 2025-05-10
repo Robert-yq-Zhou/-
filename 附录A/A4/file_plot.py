@@ -327,16 +327,16 @@ class DataAnalysisApp:
         # 添加图表元素
         x_label = f"lg({x_col})" if log_x else x_col
         y_label = f"lg({y_col})" if log_y else y_col
-        ax.set_xlabel(x_label, fontsize=12)
-        ax.set_ylabel(y_label, fontsize=12)
-        ax.set_title(title, fontsize=14)
+        ax.set_xlabel(x_label, fontsize=18)
+        ax.set_ylabel(y_label, fontsize=18)
+        ax.set_title(title, fontsize=21)
         ax.legend()
         ax.grid(True, linestyle='--', alpha=0.7)
         # 如果是对数坐标，添加网格线样式
         if log_x or log_y:
             ax.grid(True, which='both', linestyle='--', alpha=0.5)
         # 格式化坐标轴
-        ax.tick_params(axis='both', which='major', labelsize=10)
+        ax.tick_params(axis='both', which='major', labelsize=15)
         plt.tight_layout()
 
         # 嵌入到界面
