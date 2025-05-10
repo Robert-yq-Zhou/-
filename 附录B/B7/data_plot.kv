@@ -1,0 +1,57 @@
+<DataPlotScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Spinner:
+                id: x_axis
+                text: '选择 X 轴'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                values: []
+                on_text: root.update_plot()
+                size_hint_x: 0.3
+
+            Spinner:
+                id: y_axis
+                text: '选择 Y 轴'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                values: []
+                on_text: root.update_plot()
+                size_hint_x: 0.3
+
+            Spinner:
+                id: fit_type
+                text: '拟合类型'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                values: ['不拟合', '线性拟合', '二次拟合', '指数拟合']
+                option_cls: 'CustomSpinnerOption'
+                on_text: root.update_plot()
+                size_hint_x: 0.3
+
+            Button:
+                text: '选择文件'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                size_hint_x: 0.3
+                on_press: root.open_file_dialog()
+
+        BoxLayout:
+            id: plot_area
+            size_hint_y: 0.8
+        Button:
+            text: '返回主菜单'
+            font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+            size_hint_y: None
+            height: 50
+            background_color: 0.2, 0.6, 1, 1
+            on_press:
+                root.manager.current = 'main'
+<CustomSpinnerOption@SpinnerOption>:
+    font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+    background_color: (0.9, 0.9, 0.9, 1)
+    height: 40

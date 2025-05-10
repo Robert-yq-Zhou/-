@@ -1,0 +1,122 @@
+#:kivy 2.1.0
+#:import chardet chardet
+
+<DataAnalysisScreen>:
+    font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(5)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+
+            Button:
+                text: '加载文件'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                font_size: dp(14)
+                size_hint_x: 0.2
+                on_press: root.open_file_dialog()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(5)
+            spacing: dp(5)
+
+            GridLayout:
+                cols: 3
+                spacing: dp(2)
+                ToggleButton:
+                    id: cb_dbscan
+                    text: 'DBSCAN'
+                ToggleButton:
+                    id: cb_lof
+                    text: 'LOF'
+                ToggleButton:
+                    id: cb_isoforest
+                    text: 'IsoForest'
+                ToggleButton:
+                    id: cb_3sigma
+                    text: '3σ'
+                ToggleButton:
+                    id: cb_autoencoder
+                    text: 'AutoEnc'
+                ToggleButton:
+                    id: cb_iqr
+                    text: 'IQR'
+
+            Button:
+                id: detect_btn
+                text: '开始检测'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                font_size: dp(14)
+                background_color: (0.2, 0.8, 0.2, 1)
+                on_press: root.run_detection()
+
+        Label:
+            id: status
+            text: root.status_text
+            font_size: dp(12)
+            markup: True
+            size_hint_y: None
+            height: dp(25)
+            color: (0.2, 0.2, 0.2, 1)
+
+        DataRecycleView:
+            id: data_view
+            scroll_type: ['bars', 'content']
+            bar_width: dp(10)
+            viewclass: 'DataLabel'
+            effect_cls: 'ScrollEffect'
+
+            RecycleGridLayout:
+                cols: root.data_columns + 1 if root.data_columns > 0 else 1
+                default_size: (None, dp(35))
+                default_size_hint: (1, None)
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(2)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(5)
+
+            Button:
+                text: '导出结果'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                background_color: (0.9, 0.6, 0.2, 1)
+                on_press: root.export_data()
+
+            Button:
+                text: '返回主菜单'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                background_color: (0.2, 0.6, 1, 1)
+                on_press:
+                    root.manager.current = 'main'
+                    root.manager.transition.direction = 'right'
+
+<DataLabel>:
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    text: root.text
+    font_size: dp(12) if not root.is_header else dp(14)
+    text_size: (self.width - dp(20), None)
+    size_hint_x: 1
+    height: dp(30) if not root.is_header else dp(35)
+    color:
+        (0.1, 0.1, 0.1, 1) if self.is_header else \
+        (0,0,0,1) if sum(self.bg_color[:3]) > 1.5 else (1,1,1,1)
+    halign: 'left'
+    valign: 'middle'
+    padding: (dp(10), dp(2))
+    bold: True if root.is_header else False

@@ -1,0 +1,73 @@
+<FileSearchScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 15
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: '返回主菜单'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                size_hint_x: 0.3
+                on_press:
+                    root.reset_search()
+                    root.manager.current = 'main'
+
+            Label:
+                id: path_label
+                text: '未选择文件夹'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                halign: 'left'
+                text_size: self.width, None
+                font_size: 16
+
+        BoxLayout:
+            size_hint_y: None
+            height: 80
+            spacing: 10
+            padding: [0, 10, 0, 10]
+
+            TextInput:
+                id: keyword_input
+                hint_text: '输入搜索关键词'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                size_hint_x: 0.7
+                multiline: False
+                font_size: 18
+
+            Button:
+                id: search_btn
+                text: '开始搜索'
+                font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+                size_hint_x: 0.3
+                font_size: 18
+                on_press: root.perform_search()
+
+        Button:
+            text: '选择文件夹'
+            font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+            size_hint_y: None
+            height: 50
+            font_size: 18
+            on_press: root.open_folder_dialog()
+
+        Label:
+            id: status_label
+            text: '准备就绪'
+            font_name: 'fonts/SourceHanSerifSC-Regular.otf'
+            size_hint_y: None
+            height: 30
+            color: 0.8, 0.2, 0.2, 1
+            font_size: 14
+
+        ScrollView:
+            GridLayout:
+                id: results_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 5
